@@ -2,16 +2,18 @@
 This is a global logic challenge
 
 1.Follow this steps for buil:
+```
 ./gradlew clean
 ./gradlew build
 ./gradlew bootRun
-
+```
 Default port:8080
 
 2. Test:
+   ```
   ./gradlew test
-
-3. Try it with postman
+  ```
+4. Try it with postman
 Request:
 ```json
 {
