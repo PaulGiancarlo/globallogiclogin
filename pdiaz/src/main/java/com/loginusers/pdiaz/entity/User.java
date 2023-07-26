@@ -1,6 +1,8 @@
 package com.loginusers.pdiaz.entity;
 
 import com.loginusers.pdiaz.entity.PhonesType;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +16,12 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id",unique=true, nullable = false)
     private String id;
+    @Column(name = "token", nullable = false, length = 255)
+    private String token;
     @Column(name = "name", length = 95)
     private String name;
     @Column(name = "email", nullable = false, length = 155)

@@ -8,24 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
-
 @RestController
-@RequestMapping(value ="/api")
+@RequestMapping(value = "/api")
 public class LogUserController {
-    
+
     @Autowired
     private LoginService service;
-    @Autowired
-    private HttpServletRequest request;
 
+    @PostMapping(value = "/sign-up")
+    public ResponseEntity<SingUpUserResponseDTO> singUpNewUser(@RequestBody SingUpUserDTO singUpUser) throws Exception {
+        return new ResponseEntity<>(service.singUpNewUser(singUpUser), HttpStatus.CREATED);
 
-@PostMapping(value ="/sing-up")
-public ResponseEntity<SingUpUserResponseDTO> singUpNewUser(@RequestBody SingUpUserDTO singUpUser, HttpServletRequest request) throws Exception {
-    return new ResponseEntity<>(service.singUpNewUser(singUpUser), HttpStatus.CREATED);
-
-}
-
+    }
 
 }

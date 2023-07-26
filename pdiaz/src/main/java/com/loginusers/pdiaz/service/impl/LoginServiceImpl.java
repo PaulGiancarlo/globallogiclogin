@@ -1,5 +1,6 @@
 package com.loginusers.pdiaz.service.impl;
 
+
 import com.loginusers.pdiaz.entity.User;
 import com.loginusers.pdiaz.repository.UserLoginRepository;
 import com.loginusers.pdiaz.service.LoginService;
@@ -10,6 +11,7 @@ import com.loginusers.pdiaz.util.JwtUtil;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,52 +25,52 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public SingUpUserResponseDTO singUpNewUser(SingUpUserDTO singUpUser) throws  Exception{
-        User user = new User();
+    public SingUpUserResponseDTO singUpNewUser(SingUpUserDTO singUpUser) throws Exception {
         SingUpUserResponseDTO userToRegister = new SingUpUserResponseDTO();
-        if(singUpUser.getId() != null ){
-            user = repository.findById(singUpUser.getId()).get();
-        }
 
-        try {
-            if(validateUser(singUpUser)) {
-                UUID uuid = UUID.randomUUID();
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                JwtUtil utilObj = new JwtUtil();
+        if (validateUser(singUpUser)) {
 
-                userToRegister.setId(uuid.toString());
-                userToRegister.setToken(utilObj.generateToken(userToRegister.getId()));
-                userToRegister.setIsActive(Boolean.TRUE);
-                userToRegister.setCreated(timestamp.getTime());
-                userToRegister.setLastLogin(timestamp.getTime());
-            }
-        }
-        catch (Exception e){
-            throw new Exception(e.getMessage(),e.getCause());
+            UUID uuid = UUID.randomUUID();
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            JwtUtil utilObj = new JwtUtil();
+            userToRegister.setId(uuid.toString());
+            userToRegister.setToken(utilObj.generateToken(uuid.toString()));
+            userToRegister.setIsActive(Boolean.TRUE);
+            userToRegister.setCreated(timestamp.getTime());
+            userToRegister.setLastLogin(timestamp.getTime());
+
+        } else {
+            throw new Exception("Error");
         }
 
         return userToRegister;
+
     }
 
     @Override
-    public SingUpUserResponseDTO getSingleUser(Integer id) {
-        //TODO:complete
-        return null;
+    public SingUpUserResponseDTO getSingleUser(String id) {
+        Optional<User> singUpUser = repository.findById(id);
+
+        SingUpUserResponseDTO response = new SingUpUserResponseDTO();
+        if (singUpUser.isPresent()) {
+            response.setId(singUpUser.get().getId());
+
+        }
+        return response;
     }
 
     private boolean validateUser(SingUpUserDTO singUpUser) throws Exception {
         try {
-            if (isValidEmail(singUpUser.getEmail()) && isValidPassword(singUpUser.getPassword())) {
+            if (singUpUser != null && isValidEmail(singUpUser.getEmail())
+                    && isValidPassword(singUpUser.getPassword())) {
                 return Boolean.TRUE;
             }
-        }
-        catch (Exception e){
-           throw new Exception("usuario no valido", e.getCause());
+        } catch (Exception e) {
+            throw new Exception("usuario no valido", e.getCause());
 
         }
 
         return Boolean.FALSE;
-
 
     }
 
@@ -85,4 +87,5 @@ public class LoginServiceImpl implements LoginService {
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
+
 }

@@ -24,7 +24,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
 
         if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring(7);
+            token = token.split(" ")[1].trim();
 
             if (jwtUtil.isTokenValid(token)) {
                 String userId = jwtUtil.getUserIdFromToken(token);

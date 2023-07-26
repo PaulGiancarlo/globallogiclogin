@@ -1,6 +1,6 @@
 package com.loginusers.pdiaz.util;
 
-import com.loginusers.pdiaz.config.PropertiesConfig;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,9 +20,7 @@ public class JwtUtil {
 
     private final String secret = generateSafeToken();
     private final Long expiration = 21600L;
-    @Autowired
-    PropertiesConfig props;
-
+    
     public String generateToken(String userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);

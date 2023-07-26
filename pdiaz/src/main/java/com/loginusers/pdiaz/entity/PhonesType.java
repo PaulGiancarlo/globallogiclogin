@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "phones")
 public class PhonesType {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
