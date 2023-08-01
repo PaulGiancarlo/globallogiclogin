@@ -53,17 +53,6 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
-    @Override
-    public SingUpUserResponseDTO getSingleUser(String id) {
-        Optional<User> singUpUser = repository.findById(id);
-
-        SingUpUserResponseDTO response = new SingUpUserResponseDTO();
-        if (singUpUser.isPresent()) {
-            response.setId(singUpUser.get().getId());
-
-        }
-        return response;
-    }
 
     private boolean validateUser(SingUpUserDTO singUpUser) throws InvalidInputException {
         try {

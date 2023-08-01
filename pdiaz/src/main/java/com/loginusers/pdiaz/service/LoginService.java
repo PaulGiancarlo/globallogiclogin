@@ -5,5 +5,5 @@ import com.loginusers.pdiaz.dto.SingUpUserDTO;
 
 public interface LoginService {
     public SingUpUserResponseDTO singUpNewUser(SingUpUserDTO singUpUser)  throws  Exception;
-    public SingUpUserResponseDTO getSingleUser(String id);
+
 }
