@@ -20,7 +20,7 @@ public class User {
     @Basic(optional = false)
     @Column(name = "id",unique=true, nullable = false)
     private String id;
-    @Column(name = "token", nullable = false, length = 255)
+    @Column(name = "token", nullable = false, length = 155)
     private String token;
     @Column(name = "name", length = 95)
     private String name;

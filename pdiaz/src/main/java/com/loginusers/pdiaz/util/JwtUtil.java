@@ -19,7 +19,7 @@ import java.util.Map;
 public class JwtUtil {
 
     private final String secret = generateSafeToken();
-    private final Long expiration = 21600L;
+    private final Long expiration = 216000L;
     
     public String generateToken(String userId) {
         Date now = new Date();
@@ -57,7 +57,8 @@ public class JwtUtil {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[36];
         random.nextBytes(bytes);
-        var encoder = Base64.getUrlEncoder().withoutPadding();
-        return encoder.encodeToString(bytes);
+        String encoder = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+        encoder = encoder.replaceAll("[_-]","");
+        return encoder;
     }
 }
