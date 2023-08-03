@@ -1,6 +1,8 @@
 package com.loginusers.pdiaz.controller;
 
 import com.loginusers.pdiaz.dto.SingUpUserResponseDTO;
+import com.loginusers.pdiaz.exceptions.ApiError;
+import com.loginusers.pdiaz.exceptions.InvalidInputException;
 import com.loginusers.pdiaz.service.LoginService;
 import com.loginusers.pdiaz.dto.SingUpUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class LogUserController {
     private LoginService service;
 
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<SingUpUserResponseDTO> singUpNewUser(@RequestBody SingUpUserDTO singUpUser) throws Exception {
+    public ResponseEntity<SingUpUserResponseDTO> singUpNewUser(@RequestBody SingUpUserDTO singUpUser) throws ApiError {
         return new ResponseEntity<>(service.singUpNewUser(singUpUser), HttpStatus.CREATED);
 
     }

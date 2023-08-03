@@ -3,6 +3,7 @@ package com.loginusers.pdiaz.service.impl;
 import com.loginusers.pdiaz.dto.Phone;
 import com.loginusers.pdiaz.dto.SingUpUserDTO;
 import com.loginusers.pdiaz.dto.SingUpUserResponseDTO;
+import com.loginusers.pdiaz.exceptions.ApiError;
 import com.loginusers.pdiaz.exceptions.InvalidInputException;
 import com.loginusers.pdiaz.repository.UserLoginRepository;
 import org.junit.jupiter.api.Test;
@@ -48,21 +49,21 @@ class LoginServiceImplTest {
     }
 
     @Test
-    public void testValidEmail() {
+    public void testValidEmail() throws ApiError {
         assertTrue(loginService.isValidEmail("aaaaaaa@undominio.algo"));
         assertTrue(loginService.isValidEmail("info@example.com"));
-        assertThrows(InvalidInputException.class, () ->loginService.isValidEmail("invalid_email@.com"));
-        assertThrows(InvalidInputException.class, () ->loginService.isValidEmail("another.invalid_email"));
+        assertThrows(ApiError.class, () ->loginService.isValidEmail("invalid_email@.com"));
+        assertThrows(ApiError.class, () ->loginService.isValidEmail("another.invalid_email"));
 
     }
 
     @Test
-    public void testValidPassword() {
+    public void testValidPassword() throws ApiError {
         assertTrue(loginService.isValidPassword("a2asfGfdfdf4"));
         assertTrue(loginService.isValidPassword("Abc123456"));
-        assertThrows(InvalidInputException.class, () -> loginService.isValidPassword("invalidpassword"));
-        assertThrows(InvalidInputException.class, () -> loginService.isValidPassword("short"));
-        assertThrows(InvalidInputException.class, () -> loginService.isValidPassword("LongPassword12345"));
+        assertThrows(ApiError.class, () -> loginService.isValidPassword("invalidpassword"));
+        assertThrows(ApiError.class, () -> loginService.isValidPassword("short"));
+        assertThrows(ApiError.class, () -> loginService.isValidPassword("LongPassword12345"));
 
     }
 
