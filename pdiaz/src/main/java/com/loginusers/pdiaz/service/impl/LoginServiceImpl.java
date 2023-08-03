@@ -2,6 +2,7 @@ package com.loginusers.pdiaz.service.impl;
 
 
 import com.loginusers.pdiaz.constants.Constants;
+import com.loginusers.pdiaz.entity.User;
 import com.loginusers.pdiaz.exceptions.ApiError;
 import com.loginusers.pdiaz.exceptions.ApiTypeError;
 import com.loginusers.pdiaz.exceptions.InvalidInputException;
@@ -33,19 +34,24 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public SingUpUserResponseDTO singUpNewUser(SingUpUserDTO singUpUser) throws ApiError {
         SingUpUserResponseDTO userToRegister = new SingUpUserResponseDTO();
+        User user = new User();
 
-        if (validateUser(singUpUser)) {
+        if (singUpUser.getId() == null && validateUser(singUpUser)) {
 
             UUID uuid = UUID.randomUUID();
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             JwtUtil utilObj = new JwtUtil();
-            userToRegister.setId(uuid.toString());
+
             userToRegister.setToken(utilObj.generateToken(uuid.toString()));
             userToRegister.setIsActive(Boolean.TRUE);
             userToRegister.setCreated(timestamp.getTime());
             userToRegister.setLastLogin(timestamp.getTime());
 
-            repository.saveUserWithPhones(UserMapperUtil.mapUserToResponse(singUpUser,userToRegister));
+            user = repository.saveUserWithPhones(UserMapperUtil.mapUserToResponse(singUpUser,userToRegister));
+            if (user != null && user.getId()!= null){
+                userToRegister.setId(user.getId());
+            }
+
         } else {
             throw new ApiError(ApiTypeError.BUISINESS, new Timestamp(System.currentTimeMillis()).toLocalDateTime(),Constants.ERROR, HttpStatus.UNPROCESSABLE_ENTITY);
         }

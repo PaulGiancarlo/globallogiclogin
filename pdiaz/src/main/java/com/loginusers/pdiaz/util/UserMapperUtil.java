@@ -15,7 +15,7 @@ public class UserMapperUtil {
 
     public User mapUserToResponse(SingUpUserDTO registerUser ,SingUpUserResponseDTO responseDTO){
 User user = new User();
-user.setId(responseDTO.getId());
+
 user.setToken(responseDTO.getToken());
 user.setLastLogin(new Date(responseDTO.getLastLogin()));
 user.setIsActive(responseDTO.getIsActive());

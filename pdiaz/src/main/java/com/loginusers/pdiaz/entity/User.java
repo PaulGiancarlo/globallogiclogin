@@ -19,8 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id",unique=true, nullable = false)
-    private String id;
-    @Column(name = "token", nullable = false, length = 155)
+    private Integer id;
+    @Column(name = "token", nullable = false, length = 190)
     private String token;
     @Column(name = "name", length = 95)
     private String name;

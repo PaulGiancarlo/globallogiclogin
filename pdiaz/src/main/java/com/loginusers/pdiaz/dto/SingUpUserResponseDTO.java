@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class SingUpUserResponseDTO implements Serializable {
-    private String id;
+    private Integer id;
     private Long created;
     private Long lastLogin;
     private String token;
